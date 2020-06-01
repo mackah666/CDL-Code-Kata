@@ -4,7 +4,7 @@ import com.rightcode.Sku;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class PriceScanner {
+public class PriceScanner implements IPriceScanner {
 
     private Catalog catalog;
 

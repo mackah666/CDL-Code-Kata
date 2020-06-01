@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CDLKataTests {
 
-    PriceScanner priceScanner;
+    IPriceScanner priceScanner;
     Catalog catalog;
     @BeforeEach
     void SetUp(){
