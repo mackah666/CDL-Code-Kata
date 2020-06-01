@@ -22,7 +22,6 @@ public class PriceScanner {
         return sb.toString();
     }
 
-
     public int getTotalCostItemsInCart(String items) {
         int totalCost = 0;
         int qualifyingDiscountAmount = 3;
@@ -33,18 +32,26 @@ public class PriceScanner {
                 return totalCost;
             }
             else{
-                int discountQualifiers = numberOfItemsBySku.length() / qualifyingDiscountAmount;
-                int nonDiscountQualifier = numberOfItemsBySku.length() % qualifyingDiscountAmount;
+                int discountQualifiers = getNumberOfDiscountQualifiers(qualifyingDiscountAmount, numberOfItemsBySku);
+                int nonDiscountQualifier = getNumberOfNonDiscountQualifiers(qualifyingDiscountAmount, numberOfItemsBySku);
                 if (numberOfItemsBySku.length() >= 3) {
-                    return totalCost = (discountQualifiers * ((qualifyingDiscountAmount * 50) - 20))
-                            + (nonDiscountQualifier * 50);
+                    return (discountQualifiers * ((qualifyingDiscountAmount * sku.getPrice()) - 20))
+                            + (nonDiscountQualifier * sku.getPrice());
                 } else {
-                    return totalCost = nonDiscountQualifier * 50;
+                    return nonDiscountQualifier * sku.getPrice();
 
                 }
             }
         }
         return totalCost;
+    }
+
+    private int getNumberOfNonDiscountQualifiers(int qualifyingDiscountAmount, String numberOfItemsBySku) {
+        return numberOfItemsBySku.length() % qualifyingDiscountAmount;
+    }
+
+    private int getNumberOfDiscountQualifiers(int qualifyingDiscountAmount, String numberOfItemsBySku) {
+        return numberOfItemsBySku.length() / qualifyingDiscountAmount;
     }
 
 }
