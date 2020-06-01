@@ -63,4 +63,11 @@ public class CDLKataTests {
         assertEquals(310, priceScanner.getTotalCostItemsInCart(items));
     }
 
+    @Order(6)
+    @Test
+    public void OneBItemShouldCost30(){
+        String items = "B";
+        assertEquals(30, priceScanner.getTotalCostItemsInCart(items));
+    }
+
 }

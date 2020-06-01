@@ -12,46 +12,49 @@ public class PriceScanner {
         this.catalog = catalog;
     }
 
-    private String getItemsBySkuScancode(Character skuScanCode, String itemList) {
-        StringBuilder sb = new StringBuilder();
+    private int getItemsBySkuScancode(Character skuScanCode, String itemList) {
+        int numberFound = 0;
         for (int i = 0; i < itemList.length(); i++) {
             if (skuScanCode == itemList.charAt(i)) {
-                sb.append((Character.toString(itemList.charAt(i))));
+                numberFound++;
             }
         }
-        return sb.toString();
+        return numberFound;
     }
 
     public int getTotalCostItemsInCart(String items) {
         int totalCost = 0;
-        int qualifyingDiscountAmount = 3;
-        String numberOfItemsBySku;
+        int numberOfItemsBySku;
         for (Sku sku: catalog.getSkuList()) {
             numberOfItemsBySku = getItemsBySkuScancode(sku.getScanCode(), items);
-            if (numberOfItemsBySku == null || numberOfItemsBySku.isEmpty()) {
-                return totalCost;
-            }
-            else{
-                int discountQualifiers = getNumberOfDiscountQualifiers(qualifyingDiscountAmount, numberOfItemsBySku);
-                int nonDiscountQualifier = getNumberOfNonDiscountQualifiers(qualifyingDiscountAmount, numberOfItemsBySku);
-                if (numberOfItemsBySku.length() >= sku.getDiscountRule().getDiscountQuantity()) {
-                    totalCost += (discountQualifiers * ((qualifyingDiscountAmount * sku.getPrice()) - sku.getDiscountRule().getDiscountAmount()))
-                            + (nonDiscountQualifier * sku.getPrice());
+            if(numberOfItemsBySku > 0) {
+                int discountQualifiers = getNumberOfDiscountQualifiers(sku.getDiscountRule().getDiscountQuantity(), numberOfItemsBySku);
+                int nonDiscountQualifier = getNumberOfNonDiscountQualifiers(sku.getDiscountRule().getDiscountQuantity(), numberOfItemsBySku);
+                if (numberOfItemsBySku >= sku.getDiscountRule().getDiscountQuantity()) {
+                    totalCost += getDiscoutSubTotalCost(sku.getDiscountRule().getDiscountQuantity(), sku, discountQualifiers, nonDiscountQualifier);
                 } else {
-                    totalCost += nonDiscountQualifier * sku.getPrice();
-
+                    totalCost += getNonDiscountedSubTotalCost(sku, nonDiscountQualifier);
                 }
             }
         }
         return totalCost;
     }
 
-    private int getNumberOfNonDiscountQualifiers(int qualifyingDiscountAmount, String numberOfItemsBySku) {
-        return numberOfItemsBySku.length() % qualifyingDiscountAmount;
+    private int getNonDiscountedSubTotalCost(Sku sku, int nonDiscountQualifier) {
+        return nonDiscountQualifier * sku.getPrice();
     }
 
-    private int getNumberOfDiscountQualifiers(int qualifyingDiscountAmount, String numberOfItemsBySku) {
-        return numberOfItemsBySku.length() / qualifyingDiscountAmount;
+    private int getDiscoutSubTotalCost(int qualifyingDiscountAmount, Sku sku, int discountQualifiers, int nonDiscountQualifier) {
+        return (discountQualifiers * ((getNonDiscountedSubTotalCost(sku, qualifyingDiscountAmount)) - sku.getDiscountRule().getDiscountAmount()))
+                + (getNonDiscountedSubTotalCost(sku, nonDiscountQualifier));
+    }
+
+    private int getNumberOfNonDiscountQualifiers(int qualifyingDiscountAmount, int numberOfItemsBySku) {
+        return numberOfItemsBySku % qualifyingDiscountAmount;
+    }
+
+    private int getNumberOfDiscountQualifiers(int qualifyingDiscountAmount, int numberOfItemsBySku) {
+        return numberOfItemsBySku / qualifyingDiscountAmount;
     }
 
 }
