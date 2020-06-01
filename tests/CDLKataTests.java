@@ -21,5 +21,10 @@ public class CDLKataTests {
         String items = "A";
         assertEquals(50, priceScanner.getTotalCostItemsInCart(items));
     }
+    @Test
+    public void TwoAItemShouldCost100(){
+        String items = "AA";
+        assertEquals(100, priceScanner.getTotalCostItemsInCart(items));
+    }
 
 }
