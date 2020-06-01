@@ -70,11 +70,31 @@ public class CDLKataTests {
         assertEquals(30, priceScanner.getTotalCostItemsInCart(items));
     }
 
-    @Order(6)
+    @Order(7)
     @Test
-    public void OneBItemShouldCost20(){
+    public void OneCItemShouldCost20(){
         String items = "C";
         assertEquals(20, priceScanner.getTotalCostItemsInCart(items));
+    }
+    @Order(8)
+    @Test
+    public void OneDItemShouldCost15(){
+        String items = "D";
+        assertEquals(15, priceScanner.getTotalCostItemsInCart(items));
+    }
+
+    @Order(9)
+    @Test
+    public void OneDItemShouldCost245(){
+        String items = "AAABBCCDD";
+        assertEquals(245, priceScanner.getTotalCostItemsInCart(items));
+    }
+
+    @Order(10)
+    @Test
+    public void OneDItemShouldCost325(){
+        String items = "AAAABBBCCDD";
+        assertEquals(325, priceScanner.getTotalCostItemsInCart(items));
     }
 
 }
