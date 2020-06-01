@@ -1,4 +1,5 @@
 import com.rightcode.Catalog;
+import com.rightcode.DiscountRule;
 import com.rightcode.Sku;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
@@ -12,10 +13,10 @@ public class CDLKataTests {
     @BeforeEach
     void SetUp(){
         catalog = new Catalog();
-        catalog.AddToCatalog(new Sku('A', 50));
-        catalog.AddToCatalog(new Sku('B', 30));
-        catalog.AddToCatalog(new Sku('C', 20));
-        catalog.AddToCatalog(new Sku('D', 15));
+        catalog.AddToCatalog(new Sku('A', 50, new DiscountRule(20, 3)));
+        catalog.AddToCatalog(new Sku('B', 30, new DiscountRule(15, 2)));
+        catalog.AddToCatalog(new Sku('C', 20, new DiscountRule(0,0)));
+        catalog.AddToCatalog(new Sku('D', 15, new DiscountRule(0,0)));
         priceScanner = new PriceScanner(catalog);
 
     }

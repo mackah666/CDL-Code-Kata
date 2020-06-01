@@ -34,11 +34,11 @@ public class PriceScanner {
             else{
                 int discountQualifiers = getNumberOfDiscountQualifiers(qualifyingDiscountAmount, numberOfItemsBySku);
                 int nonDiscountQualifier = getNumberOfNonDiscountQualifiers(qualifyingDiscountAmount, numberOfItemsBySku);
-                if (numberOfItemsBySku.length() >= 3) {
-                    return (discountQualifiers * ((qualifyingDiscountAmount * sku.getPrice()) - 20))
+                if (numberOfItemsBySku.length() >= sku.getDiscountRule().getDiscountQuantity()) {
+                    totalCost += (discountQualifiers * ((qualifyingDiscountAmount * sku.getPrice()) - sku.getDiscountRule().getDiscountAmount()))
                             + (nonDiscountQualifier * sku.getPrice());
                 } else {
-                    return nonDiscountQualifier * sku.getPrice();
+                    totalCost += nonDiscountQualifier * sku.getPrice();
 
                 }
             }
