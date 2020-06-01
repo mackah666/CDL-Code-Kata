@@ -7,8 +7,12 @@ public class PriceScanner {
             return totalCost;
         }else {
             numberOfItems = items.length();
-            totalCost = numberOfItems * 50;
-            return totalCost;
+            if(numberOfItems == 3){
+                return totalCost = (numberOfItems * 50) - 20;
+            } else {
+                return totalCost = numberOfItems * 50;
+
+            }
         }
     }
 }
