@@ -1,6 +1,4 @@
-import com.rightcode.Catalog;
-import com.rightcode.DiscountRule;
-import com.rightcode.Sku;
+import com.rightcode.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;

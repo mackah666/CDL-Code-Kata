@@ -1,3 +1,5 @@
+package com.rightcode;
+
 import com.rightcode.Catalog;
 import com.rightcode.Sku;
 
@@ -31,7 +33,7 @@ public class PriceScanner implements IPriceScanner {
                 int discountQualifiers = getNumberOfDiscountQualifiers(sku.getDiscountRule().getDiscountQuantity(), numberOfItemsBySku);
                 int nonDiscountQualifier = getNumberOfNonDiscountQualifiers(sku.getDiscountRule().getDiscountQuantity(), numberOfItemsBySku);
                 if (numberOfItemsBySku >= sku.getDiscountRule().getDiscountQuantity()) {
-                    totalCost += getDiscoutSubTotalCost(sku.getDiscountRule().getDiscountQuantity(), sku, discountQualifiers, nonDiscountQualifier);
+                    totalCost += getDiscountSubTotalCost(sku.getDiscountRule().getDiscountQuantity(), sku, discountQualifiers, nonDiscountQualifier);
                 } else {
                     totalCost += getNonDiscountedSubTotalCost(sku, nonDiscountQualifier);
                 }
@@ -48,7 +50,7 @@ public class PriceScanner implements IPriceScanner {
         return nonDiscountQualifier * sku.getPrice();
     }
 
-    private int getDiscoutSubTotalCost(int qualifyingDiscountAmount, Sku sku, int discountQualifiers, int nonDiscountQualifier) {
+    private int getDiscountSubTotalCost(int qualifyingDiscountAmount, Sku sku, int discountQualifiers, int nonDiscountQualifier) {
         return (discountQualifiers * ((getNonDiscountedSubTotalCost(sku, qualifyingDiscountAmount)) - sku.getDiscountRule().getDiscountAmount()))
                 + (getNonDiscountedSubTotalCost(sku, nonDiscountQualifier));
     }
