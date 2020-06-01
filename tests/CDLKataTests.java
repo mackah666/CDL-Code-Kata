@@ -85,16 +85,19 @@ public class CDLKataTests {
 
     @Order(9)
     @Test
-    public void OneDItemShouldCost245(){
+    public void AAABBCCDDShouldCost245(){
         String items = "AAABBCCDD";
         assertEquals(245, priceScanner.getTotalCostItemsInCart(items));
     }
 
     @Order(10)
     @Test
-    public void OneDItemShouldCost325(){
+    public void AAAABBBCCDDAItemShouldCost375(){
         String items = "AAAABBBCCDD";
         assertEquals(325, priceScanner.getTotalCostItemsInCart(items));
+        items += "A";
+        assertEquals(375, priceScanner.getTotalCostItemsInCart(items));
+        
     }
 
 }
