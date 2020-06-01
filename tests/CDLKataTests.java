@@ -1,3 +1,5 @@
+import com.rightcode.Catalog;
+import com.rightcode.Sku;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -6,9 +8,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class CDLKataTests {
 
     PriceScanner priceScanner;
+    Catalog catalog;
     @BeforeEach
     void SetUp(){
-        priceScanner = new PriceScanner();
+        catalog = new Catalog();
+        catalog.AddToCatalog(new Sku('A', 50));
+        catalog.AddToCatalog(new Sku('B', 30));
+        catalog.AddToCatalog(new Sku('C', 20));
+        catalog.AddToCatalog(new Sku('D', 15));
+        priceScanner = new PriceScanner(catalog);
+
     }
 
     @Test
