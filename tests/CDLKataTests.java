@@ -70,4 +70,11 @@ public class CDLKataTests {
         assertEquals(30, priceScanner.getTotalCostItemsInCart(items));
     }
 
+    @Order(6)
+    @Test
+    public void OneBItemShouldCost20(){
+        String items = "C";
+        assertEquals(20, priceScanner.getTotalCostItemsInCart(items));
+    }
+
 }

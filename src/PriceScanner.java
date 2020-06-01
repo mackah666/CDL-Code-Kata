@@ -27,7 +27,7 @@ public class PriceScanner {
         int numberOfItemsBySku;
         for (Sku sku: catalog.getSkuList()) {
             numberOfItemsBySku = getItemsBySkuScancode(sku.getScanCode(), items);
-            if(numberOfItemsBySku > 0) {
+            if(numberOfItemsBySku > 0 && sku.getDiscountRule().getDiscountQuantity() != 0) {
                 int discountQualifiers = getNumberOfDiscountQualifiers(sku.getDiscountRule().getDiscountQuantity(), numberOfItemsBySku);
                 int nonDiscountQualifier = getNumberOfNonDiscountQualifiers(sku.getDiscountRule().getDiscountQuantity(), numberOfItemsBySku);
                 if (numberOfItemsBySku >= sku.getDiscountRule().getDiscountQuantity()) {
@@ -35,6 +35,10 @@ public class PriceScanner {
                 } else {
                     totalCost += getNonDiscountedSubTotalCost(sku, nonDiscountQualifier);
                 }
+            }
+            else {
+
+                totalCost += sku.getPrice() * numberOfItemsBySku;
             }
         }
         return totalCost;
